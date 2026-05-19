@@ -1,0 +1,85 @@
+{
+  "books": [
+    {
+      "id": 1,
+      "titre": "The Bungalow Mystery",
+      "auteur": "Carolyn Keene",
+      "genre": "Mystery",
+      "description": "A classic mystery story about secrets hidden inside a mysterious bungalow.",
+      "couverture": "https://via.placeholder.com/150?text=Bungalow+Mystery",
+      "aLire": false
+    },
+    {
+      "id": 2,
+      "titre": "Translator's Error",
+      "auteur": "Unknown",
+      "genre": "Science-fiction",
+      "description": "A futuristic story about language, technology, and unexpected consequences.",
+      "couverture": "https://via.placeholder.com/150?text=Translator+Error",
+      "aLire": false
+    },
+    {
+      "id": 3,
+      "titre": "The Second World",
+      "auteur": "Jake Brooks",
+      "genre": "Science-fiction",
+      "description": "A novel exploring the discovery of a hidden parallel world.",
+      "couverture": "https://via.placeholder.com/150?text=Second+World",
+      "aLire": false
+    },
+    {
+      "id": 4,
+      "titre": "A Fleeting Shadow",
+      "auteur": "Unknown",
+      "genre": "Drame",
+      "description": "A dramatic story about ambition, secrets, and personal struggles.",
+      "couverture": "https://via.placeholder.com/150?text=Fleeting+Shadow",
+      "aLire": false
+    },
+    {
+      "id": 5,
+      "titre": "The First Week",
+      "auteur": "Jason Dean",
+      "genre": "Drame",
+      "description": "A psychological drama about isolation and unexpected events during the first week.",
+      "couverture": "https://via.placeholder.com/150?text=First+Week",
+      "aLire": false
+    },
+    {
+      "id": 6,
+      "titre": "The Garden Inheritance",
+      "auteur": "Meg Harwell",
+      "genre": "Fantasy",
+      "description": "A magical inheritance that reveals secrets hidden in a beautiful garden.",
+      "couverture": "https://via.placeholder.com/150?text=Garden+Inheritance",
+      "aLire": false
+    },
+    {
+      "id": 7,
+      "titre": "The Time Machine",
+      "auteur": "H.G. Wells",
+      "genre": "Science-fiction",
+      "description": "A scientist travels through time and discovers the future of humanity.",
+      "couverture": "https://via.placeholder.com/150?text=Time+Machine",
+      "aLire": false
+    },
+    {
+      "id": 8,
+      "titre": "Dreams for Stones",
+      "auteur": "Ann Warnter",
+      "genre": "Fantasy",
+      "description": "A poetic fantasy novel about dreams turning into reality.",
+      "couverture": "https://via.placeholder.com/150?text=Dreams+for+Stones",
+      "aLire": false
+    },
+    {
+      "id": 9,
+      "titre": "Beauty & Beast",
+      "auteur": "Traditional",
+      "genre": "Classique",
+      "description": "A timeless fairy tale about love beyond appearances.",
+      "couverture": "https://via.placeholder.com/150?text=Beauty+Beast",
+      "aLire": false
+    }
+  ]
+}
