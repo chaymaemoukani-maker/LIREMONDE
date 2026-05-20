@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>LireMonde</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+<h1 class="logo-text">
+  <i class="fa-solid fa-book-open"></i> LIREMONDE
+</h1>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="#alire">À lire</a>
+    <a href="admin.html">Admin</a>
+   
+  </div>
+ <input type="text" id="search" placeholder="Rechercher...">
+</nav>
+
+<div class="categories">
+  <button class="active">Tous</button>
+  <button>Classique</button>
+  <button>Science-fiction</button>
+  <button>Drame</button>
+  <button>Fantasy</button>
+</div>
+<section id="booksContainer" class="grid"></section>
+<div id="modal" class="modal hidden">
+
+  <div class="modal-content">
+
+    <img id="modalImg">
+
+    <div>
+      <h2 id="modalTitle"></h2>
+
+      <p id="modalAuthor"></p>
+
+      <p id="modalGenre"></p>
+
+      <p id="modalDesc"></p>
+      <button onclick="addToRead()">Ajouter</button>
+      <button onclick="closeModal()">Fermer</button>
+
+    </div>
+
+  </div>
+
+</div>
+<section id="alire">
+  <h1>a lire</h1>
+</section>
+<footer>
+  <p>© 2026 LireMonde - Tous droits réservés</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
