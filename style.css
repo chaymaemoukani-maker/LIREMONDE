@@ -227,6 +227,9 @@ body{
   color: white;
   cursor: pointer;
 }
+#alire {
+  display: none;
+}
 
 /* FOOTER */
 footer {

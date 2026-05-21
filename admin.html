@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - LireMonde</title>
+
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <nav class="navbar">
+
+    <h1>Admin</h1>
+
+    <a href="index.html">Retour</a>
+
+  </nav>
+
+  <div class="container">
+
+    <button id="showFormBtn">
+      Ajouter un livre
+    </button>
+
+    <!-- FORM -->
+
+    <div id="formContainer" class="hidden">
+
+      <h2>Ajouter un nouveau livre</h2>
+
+      <input type="text" id="titre" placeholder="Titre">
+
+      <input type="text" id="auteur" placeholder="Auteur">
+
+      <input type="text" id="genre" placeholder="Genre">
+
+      <textarea id="description" placeholder="Description"></textarea>
+
+      <input type="text" id="couverture" placeholder="URL image">
+
+      <button onclick="addBook()">
+        Ajouter
+      </button>
+
+    </div>
+
+    <!-- TABLE -->
+
+    <table>
+
+      <thead>
+
+        <tr>
+       
+  <th>ID</th>
+  <th>Image</th>
+  <th>Titre</th>
+  <th>Auteur</th>
+  <th>Genre</th>
+  <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="booksTable">
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <script src="admin.js"></script>
+
+</body>
+</html>

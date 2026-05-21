@@ -7,7 +7,7 @@
       "genre": "Mystery",
       "description": "A classic mystery story about secrets hidden inside a mysterious bungalow.",
       "couverture": "image/book01.jpg",
-      "aLire": true
+      "aLire": false
     },
     {
       "id": "2",
@@ -79,8 +79,9 @@
       "genre": "Classique",
       "description": "A timeless fairy tale about love beyond appearances.",
       "couverture": "image/book 08.jpg",
-      "aLire": true
-    }
+      "aLire": false
+    },
+    
   ],
-  "$schema":"./node_modules/json-server/schema.json"
+  "$schema": "./node_modules/json-server/schema.json"
 }
