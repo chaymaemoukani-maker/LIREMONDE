@@ -115,3 +115,24 @@ document.querySelectorAll(".categories button").forEach(button => {
   });
 });
 
+
+// ======================
+// SEARCH
+// ======================
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.trim().toLowerCase();
+
+  if (!query) {
+    displayBooks(allBooks);
+    return;
+  }
+
+  const results = allBooks.filter(b =>
+    b.titre.toLowerCase().includes(query) ||
+    b.auteur.toLowerCase().includes(query)
+  );
+
+  displayBooks(results);
+});
+
