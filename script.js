@@ -160,3 +160,80 @@ async function addToRead() {
   }
 }
 
+
+// ======================
+// À LIRE SECTION
+// ======================
+
+async function displayALire() {
+  const container = document.getElementById("aLireContainer");
+
+  try {
+    const response  = await fetch("http://localhost:3000/books");
+    if (!response.ok) throw new Error("Erreur serveur : " + response.status);
+    const books     = await response.json();
+    const aLireBooks = books.filter(b => b.aLire === true);
+
+    container.innerHTML = "";
+
+    if (aLireBooks.length === 0) {
+      container.innerHTML = `<p style="padding:20px;color:#888;">Aucun livre dans votre liste.</p>`;
+      return;
+    }
+
+    aLireBooks.forEach(book => {
+      container.innerHTML += `
+        <div class="card">
+          <img src="${book.couverture}" alt="${book.titre}">
+          <h3>${book.titre}</h3>
+          <button onclick="removeFromRead('${book.id}')">Supprimer</button>
+        </div>
+      `;
+    });
+  } catch (err) {
+    container.innerHTML = `<p style="color:red;padding:20px;">⚠️ Impossible de charger la liste.</p>`;
+  }
+}
+
+async function removeFromRead(id) {
+  try {
+    const response = await fetch(`http://localhost:3000/books/${id}`);
+    if (!response.ok) throw new Error("Erreur serveur : " + response.status);
+    const book = await response.json();
+
+    const res = await fetch(`http://localhost:3000/books/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...book, aLire: false })
+    });
+    if (!res.ok) throw new Error("Erreur lors de la mise à jour.");
+
+    displayALire();
+    getBooks();
+  } catch (err) {
+    alert("Impossible de supprimer le livre. Réessayez.");
+  }
+}
+
+
+// ======================
+// HASH NAVIGATION
+// ======================
+
+function handleHash() {
+  const isALire = window.location.hash === "#alire";
+  aLireSection.style.display = isALire ? "block" : "none";
+  booksSection.style.display = isALire ? "none"  : "grid";
+  categories.style.display   = isALire ? "none"  : "flex";
+  if (isALire) displayALire();
+}
+
+window.addEventListener("hashchange", handleHash);
+handleHash();
+
+
+// ======================
+// START
+// ======================
+
+getBooks();

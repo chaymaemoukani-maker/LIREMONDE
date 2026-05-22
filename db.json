@@ -7,7 +7,7 @@
       "genre": "Mystery",
       "description": "A classic mystery story about secrets hidden inside a mysterious bungalow.",
       "couverture": "image/book01.jpg",
-      "aLire": true
+      "aLire": false
     },
     {
       "id": "2",
