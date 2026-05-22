@@ -136,3 +136,27 @@ searchInput.addEventListener("input", () => {
   displayBooks(results);
 });
 
+
+// ======================
+// ADD TO READ
+// ======================
+
+async function addToRead() {
+  if (!currentBook) return;
+
+  try {
+    const res = await fetch(`http://localhost:3000/books/${currentBook.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...currentBook, aLire: true })
+    });
+    if (!res.ok) throw new Error("Erreur serveur : " + res.status);
+
+    closeModal();
+    getBooks();
+    displayALire();
+  } catch (err) {
+    alert("Impossible d'ajouter le livre à la liste. Réessayez.");
+  }
+}
+
