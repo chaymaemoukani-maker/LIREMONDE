@@ -55,4 +55,37 @@ async function getBooks() {
   } catch (err) {
     showTableError("Impossible de charger les livres. Vérifiez que le serveur est lancé.");
   }
+}// DISPLAY BOOKS
+
+function displayBooks(books) {
+  table.innerHTML = "";
+
+  if (books.length === 0) {
+    table.innerHTML = `
+      <tr>
+        <td colspan="6" style="padding:20px;text-align:center;color:#888;">
+          Aucun livre enregistré.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  books.forEach(book => {
+    table.innerHTML += `
+      <tr>
+        <td>${book.id}</td>
+        <td><img src="${book.couverture}" alt="${book.titre}"></td>
+        <td>${book.titre}</td>
+        <td>${book.auteur}</td>
+        <td>${book.genre}</td>
+        <td>
+          <div class="action-btns">
+            <button class="btn-edit"   onclick="editBook('${book.id}')"   title="Modifier">✏️</button>
+            <button class="btn-delete" onclick="deleteBook('${book.id}')" title="Supprimer">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `;
+  });
 }
