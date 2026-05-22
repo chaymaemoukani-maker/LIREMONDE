@@ -43,3 +43,16 @@ function clearForm() {
   document.getElementById("description").value = "";
   document.getElementById("couverture").value  = "";
 }
+
+// GET BOOKS
+
+async function getBooks() {
+  try {
+    const response = await fetch("http://localhost:3000/books");
+    if (!response.ok) throw new Error("Erreur serveur : " + response.status);
+    const books = await response.json();
+    displayBooks(books);
+  } catch (err) {
+    showTableError("Impossible de charger les livres. Vérifiez que le serveur est lancé.");
+  }
+}
