@@ -5,3 +5,41 @@ const formTitle    = document.getElementById("formTitle");
 const submitBtn    = document.getElementById("submitBtn");
 
 let editingId = null;
+
+// HELPERS
+
+function showTableError(msg) {
+  console.error(msg);
+  table.innerHTML = `
+    <tr>
+      <td colspan="6" style="color:red; padding:20px; text-align:center;">
+        ⚠️ ${msg}
+      </td>
+    </tr>
+  `;
+}
+
+
+// SHOW / HIDE FORM
+
+showFormBtn.addEventListener("click", () => {
+  editingId = null;
+  formTitle.textContent  = "Ajouter un nouveau livre";
+  submitBtn.textContent  = "Ajouter";
+  clearForm();
+  formContainer.classList.remove("hidden");
+});
+
+function cancelForm() {
+  editingId = null;
+  formContainer.classList.add("hidden");
+  clearForm();
+}
+
+function clearForm() {
+  document.getElementById("titre").value       = "";
+  document.getElementById("auteur").value      = "";
+  document.getElementById("genre").value       = "";
+  document.getElementById("description").value = "";
+  document.getElementById("couverture").value  = "";
+}
