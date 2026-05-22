@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>LireMonde</title>
   <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
 
@@ -32,19 +34,19 @@
 
   <div class="modal-content">
 
-    <img id="modalImg">
+    <img id="modalImg" class="modal-img">
 
-    <div>
-      <h2 id="modalTitle"></h2>
+    <div class="modal-info">
+      <h2 id="modalTitle" class="modal-title"></h2>
+      <p id="modalAuthor" class="modal-author"></p>
 
-      <p id="modalAuthor"></p>
+      <p id="modalGenre" class="modal-genre"></p>
+      <p id="modalDesc" class="modal-desc"></p>
 
-      <p id="modalGenre"></p>
-
-      <p id="modalDesc"></p>
-      <button onclick="addToRead()">Ajouter</button>
-      <button onclick="closeModal()">Fermer</button>
-
+      <div class="modal-buttons">
+        <button class="btn-alire" onclick="addToRead()">❤️ A lire</button>
+        <button class="btn-fermer" onclick="closeModal()">Fermer</button>
+      </div>
     </div>
 
   </div>

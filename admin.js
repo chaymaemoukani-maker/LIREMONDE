@@ -1,8 +1,26 @@
-const table = document.getElementById("booksTable");
-
+const table        = document.getElementById("booksTable");
 const formContainer = document.getElementById("formContainer");
+const showFormBtn  = document.getElementById("showFormBtn");
+const formTitle    = document.getElementById("formTitle");
+const submitBtn    = document.getElementById("submitBtn");
 
-const showFormBtn = document.getElementById("showFormBtn");
+let editingId = null;
+
+
+// ======================
+// HELPERS
+// ======================
+
+function showTableError(msg) {
+  console.error(msg);
+  table.innerHTML = `
+    <tr>
+      <td colspan="6" style="color:red; padding:20px; text-align:center;">
+        ⚠️ ${msg}
+      </td>
+    </tr>
+  `;
+}
 
 
 // ======================
@@ -10,10 +28,26 @@ const showFormBtn = document.getElementById("showFormBtn");
 // ======================
 
 showFormBtn.addEventListener("click", () => {
-
-  formContainer.classList.toggle("hidden");
-
+  editingId = null;
+  formTitle.textContent  = "Ajouter un nouveau livre";
+  submitBtn.textContent  = "Ajouter";
+  clearForm();
+  formContainer.classList.remove("hidden");
 });
+
+function cancelForm() {
+  editingId = null;
+  formContainer.classList.add("hidden");
+  clearForm();
+}
+
+function clearForm() {
+  document.getElementById("titre").value       = "";
+  document.getElementById("auteur").value      = "";
+  document.getElementById("genre").value       = "";
+  document.getElementById("description").value = "";
+  document.getElementById("couverture").value  = "";
+}
 
 
 // ======================
@@ -21,13 +55,14 @@ showFormBtn.addEventListener("click", () => {
 // ======================
 
 async function getBooks() {
-
-  const response = await fetch("http://localhost:3000/books");
-
-  const books = await response.json();
-
-  displayBooks(books);
-
+  try {
+    const response = await fetch("http://localhost:3000/books");
+    if (!response.ok) throw new Error("Erreur serveur : " + response.status);
+    const books = await response.json();
+    displayBooks(books);
+  } catch (err) {
+    showTableError("Impossible de charger les livres. Vérifiez que le serveur est lancé.");
+  }
 }
 
 
@@ -36,85 +71,108 @@ async function getBooks() {
 // ======================
 
 function displayBooks(books) {
-
   table.innerHTML = "";
 
-  books.forEach(book => {
-
-    table.innerHTML += `
-
+  if (books.length === 0) {
+    table.innerHTML = `
       <tr>
-
-        <td>${book.id}</td>
-
-        <td>
-          <img src="${book.couverture}">
+        <td colspan="6" style="padding:20px;text-align:center;color:#888;">
+          Aucun livre enregistré.
         </td>
-
-        <td>${book.titre}</td>
-        
-
-        <td>${book.auteur}</td>
-
-        <td>${book.genre}</td>
-
-        <td>
-
-          <button onclick="deleteBook(${book.id})">
-            Supprimer
-          </button>
-
-        </td>
-
       </tr>
+    `;
+    return;
+  }
 
+  books.forEach(book => {
+    table.innerHTML += `
+      <tr>
+        <td>${book.id}</td>
+        <td><img src="${book.couverture}" alt="${book.titre}"></td>
+        <td>${book.titre}</td>
+        <td>${book.auteur}</td>
+        <td>${book.genre}</td>
+        <td>
+          <div class="action-btns">
+            <button class="btn-edit"   onclick="editBook('${book.id}')"   title="Modifier">✏️</button>
+            <button class="btn-delete" onclick="deleteBook('${book.id}')" title="Supprimer">🗑️</button>
+          </div>
+        </td>
+      </tr>
     `;
   });
-
 }
 
 
 // ======================
-// ADD BOOK
+// ADD OR UPDATE BOOK
 // ======================
 
-async function addBook() {
+async function submitForm() {
+  const titre       = document.getElementById("titre").value.trim();
+  const auteur      = document.getElementById("auteur").value.trim();
+  const genre       = document.getElementById("genre").value;
+  const description = document.getElementById("description").value.trim();
+  const couverture  = document.getElementById("couverture").value.trim();
 
-  const titre = document.getElementById("titre").value;
+  if (!titre || !auteur || !genre) {
+    alert("Veuillez remplir au moins le titre, l'auteur et le genre.");
+    return;
+  }
 
-  const auteur = document.getElementById("auteur").value;
+  const bookData = { titre, auteur, genre, description, couverture, aLire: false };
 
-  const genre = document.getElementById("genre").value;
+  try {
+    if (editingId !== null) {
+      const res = await fetch(`http://localhost:3000/books/${editingId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...bookData, id: editingId })
+      });
+      if (!res.ok) throw new Error("Erreur lors de la modification.");
+      editingId = null;
+    } else {
+      const res = await fetch("http://localhost:3000/books", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookData)
+      });
+      if (!res.ok) throw new Error("Erreur lors de l'ajout.");
+    }
 
-  const description = document.getElementById("description").value;
+    clearForm();
+    formContainer.classList.add("hidden");
+    getBooks();
+  } catch (err) {
+    alert("Une erreur est survenue : " + err.message);
+  }
+}
 
-  const couverture = document.getElementById("couverture").value;
 
-  const newBook = {
+// ======================
+// EDIT BOOK
+// ======================
 
-    titre,
-    auteur,
-    genre,
-    description,
-    couverture,
-    aLire:false
+async function editBook(id) {
+  try {
+    const response = await fetch(`http://localhost:3000/books/${id}`);
+    if (!response.ok) throw new Error("Livre introuvable.");
+    const book = await response.json();
 
-  };
+    document.getElementById("titre").value       = book.titre;
+    document.getElementById("auteur").value      = book.auteur;
+    document.getElementById("genre").value       = book.genre;
+    document.getElementById("description").value = book.description;
+    document.getElementById("couverture").value  = book.couverture;
 
-  await fetch("http://localhost:3000/books", {
-
-    method:"POST",
-
-    headers:{
-      "Content-Type":"application/json"
-    },
-
-    body:JSON.stringify(newBook)
-
-  });
-
-  getBooks();
-
+    editingId             = id;
+    formTitle.textContent = "Modifier le livre";
+    submitBtn.textContent = "Enregistrer";
+    formContainer.classList.remove("hidden");
+    formContainer.scrollIntoView({ behavior: "smooth" });
+  } catch (err) {
+    alert("Impossible de charger ce livre : " + err.message);
+  }
 }
 
 
@@ -123,15 +181,17 @@ async function addBook() {
 // ======================
 
 async function deleteBook(id) {
+  if (!confirm("Supprimer ce livre ?")) return;
 
-  await fetch(`http://localhost:3000/books/${id}`, {
-
-    method:"DELETE"
-
-  });
-
-  getBooks();
-
+  try {
+    const res = await fetch(`http://localhost:3000/books/${id}`, {
+      method: "DELETE"
+    });
+    if (!res.ok) throw new Error("Erreur lors de la suppression.");
+    getBooks();
+  } catch (err) {
+    alert("Impossible de supprimer ce livre : " + err.message);
+  }
 }
 
 
