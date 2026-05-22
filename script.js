@@ -91,3 +91,27 @@ function closeModal() {
   document.getElementById("modal").classList.add("hidden");
 }
 
+
+// ======================
+// CATEGORIES FILTER
+// ======================
+
+document.querySelectorAll(".categories button").forEach(button => {
+  button.addEventListener("click", async () => {
+    try {
+      const response = await fetch("http://localhost:3000/books");
+      if (!response.ok) throw new Error("Erreur serveur : " + response.status);
+      const books    = await response.json();
+      const available = books.filter(b => b.aLire === false);
+
+      document.querySelectorAll(".categories button").forEach(b => b.classList.remove("active"));
+      button.classList.add("active");
+
+      const category = button.textContent.trim();
+      displayBooks(category === "Tous" ? available : available.filter(b => b.genre === category));
+    } catch (err) {
+      showError("Impossible de filtrer les livres.");
+    }
+  });
+});
+
