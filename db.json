@@ -7,7 +7,7 @@
       "genre": "Mystery",
       "description": "A classic mystery story about secrets hidden inside a mysterious bungalow.",
       "couverture": "image/book01.jpg",
-      "aLire": false
+      "aLire": true
     },
     {
       "id": "2",
@@ -16,7 +16,7 @@
       "genre": "Science-fiction",
       "description": "A futuristic story about language, technology, and unexpected consequences.",
       "couverture": "image/book02.jpg",
-      "aLire": false
+      "aLire": true
     },
     {
       "id": "3",
@@ -80,7 +80,15 @@
       "description": "A timeless fairy tale about love beyond appearances.",
       "couverture": "image/book 08.jpg",
       "aLire": false
+    },
+    {
+      "id": "10",
+      "titre": "sjjsjsj",
+      "auteur": "hshshshs",
+      "genre": "Drame",
+      "description": "jjjkj",
+      "couverture": "https://img.freepik.com/premium-photo/photo-evening-nature-landscape-with-river-lake-view-beautiful-trees_763111-93158.jpg?w=2000",
+      "aLire": false
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

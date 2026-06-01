@@ -105,13 +105,36 @@ async function submitForm() {
   const description = document.getElementById("description").value.trim();
   const couverture  = document.getElementById("couverture").value.trim();
 
-  if (!titre || !auteur || !genre) {
+  
+  if (!couverture.startsWith("http://") && !couverture.startsWith("https://")) {
+  alert("Veuillez entrer une URL valide.");
+  return;
+}
+  if (!titre || !auteur || !genre ) {
     alert("Veuillez remplir au moins le titre, l'auteur et le genre.");
     return;
   }
 
-  const bookData = { titre, auteur, genre, description, couverture, aLire: false };
+const response = await fetch("http://localhost:3000/books");
+const books = await response.json();
 
+const numericIds = books
+  .map(book => parseInt(book.id))
+  .filter(id => !isNaN(id));
+
+const newId = numericIds.length > 0
+  ? (Math.max(...numericIds) + 1).toString()
+  : "1";
+
+const bookData = {
+  id: newId,
+  titre,
+  auteur,
+  genre,
+  description,
+  couverture,
+  aLire: false
+};
   try {
     if (editingId !== null) {
       const res = await fetch(`http://localhost:3000/books/${editingId}`, {
